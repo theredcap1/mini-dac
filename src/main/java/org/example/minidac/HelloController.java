@@ -36,7 +36,7 @@ public class HelloController {
         myHBox.setPadding(new Insets(10)); // Padding for the HBox
 
         // Set up the Explore button action
-        exploreButton.setOnAction(event -> toggleSidebar());
+        exploreButton.setOnAction(ignored -> toggleSidebar());
     }
 
     // Toggle the sidebar visibility with animation
@@ -46,7 +46,7 @@ public class HelloController {
         if (isSidebarVisible) {
             slide.setToX(-250);
             fade.setToValue(0.0);
-            fade.setOnFinished(e -> sidebar.setVisible(false));
+            fade.setOnFinished(ignored -> sidebar.setVisible(false));
         } else {
             sidebar.setVisible(true);
             slide.setToX(0);
@@ -63,7 +63,7 @@ public class HelloController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
         File selectedFile = fileChooser.showOpenDialog(null);
-        System.out.println((long)(selectedFile.length()/1024) + "KB");
+        System.out.println((selectedFile.length()/1024) + "KB");
 
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());

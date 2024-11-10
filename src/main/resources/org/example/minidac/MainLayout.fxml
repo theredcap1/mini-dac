@@ -11,7 +11,7 @@
     <!-- Sidebar on the left -->
 
     <!-- Center content area -->
-    <VBox fx:id="contentArea" style="-fx-background-color: #1e1b47;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox style="-fx-background-color: #1e1b47;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <!-- HBox for Explore button -->
         <HBox fx:id="myHBox" alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="642.0" spacing="10" style="-fx-background-color: #3e2258;">
             <Button fx:id="exploreButton" onAction="#toggleSidebar" prefHeight="41.0" prefWidth="94.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Explore" />
