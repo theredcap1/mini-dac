@@ -6,8 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="570.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.minidac.HelloController">
+<AnchorPane prefHeight="570.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.minidac.HelloController">
     <!-- Sidebar on the left -->
 
     <!-- Center content area -->
@@ -17,8 +19,22 @@
             <Button fx:id="exploreButton" onAction="#toggleSidebar" prefHeight="41.0" prefWidth="94.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Explore" />
         </HBox>
     </VBox>
-    <!-- ImageView to display uploaded images -->
-    <ImageView fx:id="imageView" fitHeight="405.0" fitWidth="570.0" x="335.0" y="67.0" />
+   <VBox fx:id="main" layoutX="193.0" layoutY="77.0" prefHeight="200.0" prefWidth="100.0">
+      <children>
+          <!-- ImageView to display uploaded images -->
+          <ImageView fx:id="imageView" fitHeight="405.0" fitWidth="580.0" x="335.0" y="67.0" />
+         <Text fx:id="name" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Text>
+         <Text fx:id="size" fill="#949494" layoutX="10.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </Text>
+      </children>
+   </VBox>
     <VBox fx:id="sidebar" layoutY="43.0" opacity="0.3" prefHeight="415.0" prefWidth="190.0" style="-fx-background-color: #5c3c8c;" visible="false">
         <Button onAction="#handleUpload" prefHeight="42.0" prefWidth="199.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Upload" />
         <ListView fx:id="imageListView" opacity="0.3" prefWidth="264.0" style="-fx-background-color: #5c3c8c;" />
