@@ -31,10 +31,9 @@ class ImageObjList {
         images = new ArrayList<>();
     }
     public String searchforPath(String name) {
-        int i = 0;
-        while (i < images.size()) {
-            if (images.get(i).name.equals(name)) {
-                return images.get(i).path;
+        for (ImageObj image : images) {
+            if (image.name.equals(name)) {
+                return image.path;
             }
         }
         return null;
@@ -56,16 +55,36 @@ public class HelloController {
     @FXML
     private Text name;
     @FXML
+    private VBox main;
+    @FXML
     private Text size;
     @FXML
     private Button exploreButton = new Button();  // Button to trigger the sidebar
-    private ImageObjList imageObjList = new ImageObjList();
+    private final ImageObjList imageObjList = new ImageObjList();
     private boolean isSidebarVisible = false;
     public void initialize() {
         sidebar.setTranslateX(-250);
         myHBox.setPadding(new Insets(10));
 
         exploreButton.setOnAction(ignored -> toggleSidebar());
+        imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Search for the selected image in the imageObjList using its name
+                String imagePath = imageObjList.searchforPath(newValue);
+                if (imagePath != null) {
+                    // Display the image in the ImageView
+                    Image image = new Image(imagePath);
+                    imageView.setImage(image);
+                    imageView.setPreserveRatio(true);
+                    imageView.setFitWidth(400);
+
+                    // Update name and size in the UI
+                    name.setText(newValue);
+                    File file = new File(imagePath);
+                    size.setText(file.length() / 1024 + " KB");
+                }
+            }
+        });
     }
 
     public void toggleSidebar() {
@@ -99,16 +118,10 @@ public class HelloController {
             imageView.setFitWidth(400);
 
             imageListView.getItems().add(selectedFile.getName());
-            imageObjList.add(new ImageObj(selectedFile.getName(), "file:///" + selectedFile.getPath()));
-            System.out.println(selectedFile.getAbsolutePath());
+            imageObjList.add(new ImageObj(selectedFile.getName(), selectedFile.toURI().toString()));
             System.out.println("object added to list");
             name.setText(selectedFile.getName());
             size.setText(selectedFile.length() / 1024 + "KB");
-            imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                imageView.setImage(new Image(imageObjList.searchforPath(newValue)));
-                System.out.println("sucessfully added listener");
-            });
-
         }
     }
 }
