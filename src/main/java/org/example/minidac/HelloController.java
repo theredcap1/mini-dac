@@ -85,8 +85,6 @@ public class HelloController {
                     imageView.setFitWidth(400);
 
                     name.setText(newValue);
-                    File file = new File(imagePath);
-                    System.out.println(imagePath);
                     size.setText(imageObjList.searchforSize(newValue) / 1024 + "KB");
                 }
             }

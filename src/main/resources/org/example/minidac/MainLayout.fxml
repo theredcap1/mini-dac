@@ -19,7 +19,7 @@
             <Button fx:id="exploreButton" onAction="#toggleSidebar" prefHeight="41.0" prefWidth="94.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Explore" />
         </HBox>
     </VBox>
-   <VBox fx:id="main" alignment="CENTER" layoutX="193.0" layoutY="77.0" prefHeight="447.0" prefWidth="620.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="104.20000000000005" AnchorPane.topAnchor="77.0">
+   <VBox fx:id="main" alignment="CENTER" layoutX="193.0" layoutY="77.0" prefHeight="447.0" prefWidth="620.0" spacing="5.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="104.20000000000005" AnchorPane.topAnchor="77.0">
       <children>
           <!-- ImageView to display uploaded images -->
           <ImageView fx:id="imageView" fitHeight="405.0" fitWidth="580.0" x="335.0" y="67.0" />
