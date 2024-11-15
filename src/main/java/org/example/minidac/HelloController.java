@@ -19,10 +19,12 @@ import java.util.ArrayList;
 
 class ImageObj {
     public String name, path;
+    public long size;
 
-    public ImageObj(String name, String path) {
+    public ImageObj(String name, String path, long size) {
         this.name = name;
         this.path = path;
+        this.size = size;
     }
 }
 class ImageObjList {
@@ -37,6 +39,14 @@ class ImageObjList {
             }
         }
         return null;
+    }
+    public long searchforSize(String name) {
+        for (ImageObj image : images) {
+            if (image.name.equals(name)) {
+                return image.size;
+            }
+        }
+        return 0;
     }
     public void add(ImageObj image) {
         images.add(image);
@@ -55,8 +65,6 @@ public class HelloController {
     @FXML
     private Text name;
     @FXML
-    private VBox main;
-    @FXML
     private Text size;
     @FXML
     private Button exploreButton = new Button();  // Button to trigger the sidebar
@@ -69,19 +77,17 @@ public class HelloController {
         exploreButton.setOnAction(ignored -> toggleSidebar());
         imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // Search for the selected image in the imageObjList using its name
                 String imagePath = imageObjList.searchforPath(newValue);
                 if (imagePath != null) {
-                    // Display the image in the ImageView
                     Image image = new Image(imagePath);
                     imageView.setImage(image);
                     imageView.setPreserveRatio(true);
                     imageView.setFitWidth(400);
 
-                    // Update name and size in the UI
                     name.setText(newValue);
                     File file = new File(imagePath);
-                    size.setText(file.length() / 1024 + " KB");
+                    System.out.println(imagePath);
+                    size.setText(imageObjList.searchforSize(newValue) / 1024 + "KB");
                 }
             }
         });
@@ -110,7 +116,6 @@ public class HelloController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
         File selectedFile = fileChooser.showOpenDialog(null);
-
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
             imageView.setImage(image);
@@ -118,8 +123,7 @@ public class HelloController {
             imageView.setFitWidth(400);
 
             imageListView.getItems().add(selectedFile.getName());
-            imageObjList.add(new ImageObj(selectedFile.getName(), selectedFile.toURI().toString()));
-            System.out.println("object added to list");
+            imageObjList.add(new ImageObj(selectedFile.getName(), selectedFile.toURI().toString(), selectedFile.length()));
             name.setText(selectedFile.getName());
             size.setText(selectedFile.length() / 1024 + "KB");
         }
