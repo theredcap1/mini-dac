@@ -12,31 +12,37 @@
 <AnchorPane prefHeight="570.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.minidac.HelloController">
     <!-- Sidebar on the left -->
 
-       <!-- Center content area -->
+    <!-- Center content area -->
     <VBox style="-fx-background-color: #1e1b47;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <!-- HBox for Explore button -->
         <HBox fx:id="myHBox" alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="642.0" spacing="10" style="-fx-background-color: #3e2258;">
-            <Button fx:id="exploreButton" onAction="#toggleSidebar" prefHeight="41.0" prefWidth="94.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Explore" />
+            <Button fx:id="exploreButton" onAction="#toggleSidebar" prefHeight="41.0" prefWidth="88.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Explore" />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Image Classification" textAlignment="CENTER" wrappingWidth="803.900390625">
+                <font>
+                    <Font name="Andalus" size="20.0" />
+                </font>
+            </Text>
         </HBox>
     </VBox>
-   <VBox fx:id="main" alignment="CENTER" layoutX="193.0" layoutY="77.0" prefHeight="447.0" prefWidth="620.0" spacing="5.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="104.20000000000005" AnchorPane.topAnchor="77.0">
-      <children>
-          <!-- ImageView to display uploaded images -->
-          <ImageView fx:id="imageView" fitHeight="405.0" fitWidth="580.0" x="335.0" y="67.0" />
-         <Text fx:id="name" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Text>
-         <Text fx:id="size" fill="#949494" layoutX="10.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
-            <font>
-               <Font size="13.0" />
-            </font>
-         </Text>
-      </children>
-   </VBox>
-    <VBox fx:id="sidebar" layoutY="47.0" opacity="0.3" prefHeight="522.0" prefWidth="190.0" spacing="25.0" style="-fx-background-color: #5c3c8c;">
+    <VBox fx:id="main" alignment="CENTER" layoutX="227.0" layoutY="77.0" prefHeight="487.0" prefWidth="586.0" spacing="5.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="104.0" AnchorPane.topAnchor="77.0">
+        <children>
+            <!-- ImageView to display uploaded images -->
+            <ImageView fx:id="imageView" fitHeight="405.0" fitWidth="580.0" x="335.0" y="67.0" />
+            <Text fx:id="name" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Text>
+            <Text fx:id="size" fill="#949494" layoutX="10.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
+                <font>
+                    <Font size="13.0" />
+                </font>
+            </Text>
+        </children>
+    </VBox>
+    <VBox fx:id="sidebar" layoutY="48.0" opacity="0.3" prefHeight="564.0" prefWidth="190.0" spacing="25.0" style="-fx-background-color: #5c3c8c;">
         <Button layoutX="11.0" onAction="#handleUpload" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Upload" />
-        <ListView fx:id="imageListView" opacity="0.3" prefHeight="391.0" prefWidth="190.0" style="-fx-background-color: #5c3c8c;" />
+        <Button fx:id="exploreButton1" onAction="#toggleSidebar" prefHeight="28.0" prefWidth="190.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Classify" />
+        <ListView fx:id="imageListView" opacity="0.3" prefHeight="473.0" prefWidth="190.0" style="-fx-background-color: #5c3c8c;" />
     </VBox>
 </AnchorPane>
