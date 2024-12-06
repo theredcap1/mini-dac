@@ -26,7 +26,7 @@
         </HBox>
 
     </VBox>
-    <VBox fx:id="main" alignment="CENTER" layoutX="227.0" layoutY="77.0" prefWidth="586.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="104.0" AnchorPane.topAnchor="77.0">
+    <VBox alignment="CENTER" layoutX="227.0" layoutY="77.0" prefWidth="586.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="104.0" AnchorPane.topAnchor="77.0">
         <ImageView fx:id="imageView" fitHeight="405.0" fitWidth="580.0" x="335.0" y="67.0" />
         <Text fx:id="name" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="578.9366607666016">
             <font>
@@ -47,6 +47,6 @@
     <VBox fx:id="sidebar" opacity="0.3" prefHeight="600.0" prefWidth="190.0" spacing="25.0" style="-fx-background-color: #5c3c8c;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="48.0">
         <Button layoutX="11.0" onAction="#handleUpload" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Upload" />
         <ListView fx:id="imageListView" opacity="0.3" prefHeight="473.0" prefWidth="190.0" style="-fx-background-color: #5c3c8c;" />
-        <Button fx:id="exploreButton1" onAction="#classify" prefHeight="28.0" prefWidth="190.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Classify" />
+        <Button onAction="#classify" prefHeight="28.0" prefWidth="190.0" style="-fx-background-color: #8a4c99; -fx-text-fill: white;" text="Classify" />
     </VBox>
 </AnchorPane>
