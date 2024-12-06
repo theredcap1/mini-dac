@@ -67,7 +67,9 @@ public class HelloController {
     @FXML
     private Text size;
     @FXML
-    private Button exploreButton = new Button();  // Button to trigger the sidebar
+    private Button exploreButton = new Button();
+    @FXML
+    private Text prob;
     private final ImageObjList imageObjList = new ImageObjList();
     private boolean isSidebarVisible = false;
     public void initialize() {
@@ -86,6 +88,7 @@ public class HelloController {
 
                     name.setText(newValue);
                     size.setText(imageObjList.searchforSize(newValue) / 1024 + "KB");
+                    prob.setText("");
                 }
             }
         });
@@ -112,6 +115,8 @@ public class HelloController {
 
     public void handleUpload() {
         FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter et = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
+        fileChooser.getExtensionFilters().add(et);
         fileChooser.setTitle("Open Image File");
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
@@ -124,12 +129,12 @@ public class HelloController {
             imageObjList.add(new ImageObj(selectedFile.getName(), selectedFile.toURI().toString(), selectedFile.length()));
             name.setText(selectedFile.getName());
             size.setText(selectedFile.length() / 1024 + "KB");
+            prob.setText("");
         }
     }
     public void classify() {
         String path = imageObjList.searchforPath(name.getText()).substring(6);
         System.out.println(path);
-
-        size.setText(ImageClassifier.classify(new File(path)));
+        prob.setText(ImageClassifier.classify(new File(path)));
     }
 }
