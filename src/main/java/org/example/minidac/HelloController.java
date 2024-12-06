@@ -75,7 +75,7 @@ public class HelloController {
         myHBox.setPadding(new Insets(10));
 
         exploreButton.setOnAction(ignored -> toggleSidebar());
-        imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        imageListView.getSelectionModel().selectedItemProperty().addListener((ignored, ignored1, newValue) -> {
             if (newValue != null) {
                 String imagePath = imageObjList.searchforPath(newValue);
                 if (imagePath != null) {
@@ -125,5 +125,11 @@ public class HelloController {
             name.setText(selectedFile.getName());
             size.setText(selectedFile.length() / 1024 + "KB");
         }
+    }
+    public void classify() {
+        String path = imageObjList.searchforPath(name.getText()).substring(6);
+        System.out.println(path);
+
+        size.setText(ImageClassifier.classify(new File(path)));
     }
 }

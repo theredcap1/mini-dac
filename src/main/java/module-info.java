@@ -10,6 +10,7 @@ module org.example.minidac {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires ai.djl.api;
 
     opens org.example.minidac to javafx.fxml;
     exports org.example.minidac;
