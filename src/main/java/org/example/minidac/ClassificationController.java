@@ -2,6 +2,7 @@ package org.example.minidac;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -16,22 +17,30 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class ImageObj {
-    public String name, path;
+    public String name, path, classification;
     public long size;
 
-    public ImageObj(String name, String path, long size) {
+    public ImageObj(String name, String path, long size, String classification) {
         this.name = name;
         this.path = path;
         this.size = size;
+        this.classification = classification;
     }
 }
+
 class ImageObjList {
     public ArrayList<ImageObj> images;
+
     public ImageObjList() {
         images = new ArrayList<>();
     }
+
     public String searchforPath(String name) {
         for (ImageObj image : images) {
             if (image.name.equals(name)) {
@@ -40,6 +49,7 @@ class ImageObjList {
         }
         return null;
     }
+
     public long searchforSize(String name) {
         for (ImageObj image : images) {
             if (image.name.equals(name)) {
@@ -48,11 +58,27 @@ class ImageObjList {
         }
         return 0;
     }
+    public String searchforClassification(String name) {
+        for (ImageObj image : images) {
+            if (image.name.equals(name)) {
+                return image.classification;
+            }
+        }
+        return "";
+    }
+    public void setClassification(String name, String classification) {
+        for (ImageObj image : images) {
+            if (Objects.equals(image.name, name)) {
+                image.classification = classification;
+            }
+        }
+    }
     public void add(ImageObj image) {
         images.add(image);
     }
 }
-public class HelloController {
+
+public class ClassificationController {
 
     @FXML
     private ListView<String> imageListView;
@@ -70,8 +96,11 @@ public class HelloController {
     private Button exploreButton = new Button();
     @FXML
     private Text prob;
+
     private final ImageObjList imageObjList = new ImageObjList();
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
     private boolean isSidebarVisible = false;
+
     public void initialize() {
         sidebar.setTranslateX(-250);
         myHBox.setPadding(new Insets(10));
@@ -88,7 +117,7 @@ public class HelloController {
 
                     name.setText(newValue);
                     size.setText(imageObjList.searchforSize(newValue) / 1024 + "KB");
-                    prob.setText("");
+                    prob.setText(imageObjList.searchforClassification(newValue));
                 }
             }
         });
@@ -112,29 +141,44 @@ public class HelloController {
         isSidebarVisible = !isSidebarVisible;
     }
 
-
     public void handleUpload() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter et = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
         fileChooser.getExtensionFilters().add(et);
-        fileChooser.setTitle("Open Image File");
-        File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            Image image = new Image(selectedFile.toURI().toString());
-            imageView.setImage(image);
-            imageView.setPreserveRatio(true);
-            imageView.setFitWidth(400);
+        fileChooser.setTitle("Open Image Files");
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
-            imageListView.getItems().add(selectedFile.getName());
-            imageObjList.add(new ImageObj(selectedFile.getName(), selectedFile.toURI().toString(), selectedFile.length()));
-            name.setText(selectedFile.getName());
-            size.setText(selectedFile.length() / 1024 + "KB");
-            prob.setText("");
+        if (selectedFiles != null) {
+            for (File file : selectedFiles) {
+                imageListView.getItems().add(file.getName());
+                imageObjList.add(new ImageObj(file.getName(), file.toURI().toString(), file.length(), ""));
+            }
         }
     }
+
     public void classify() {
-        String path = imageObjList.searchforPath(name.getText()).substring(6);
-        System.out.println(path);
-        prob.setText(ImageClassifier.classify(new File(path)));
+        String imageName = name.getText();
+        if (imageName == null || imageName.isEmpty()) {
+            prob.setText("Please select an image first!");
+            return;
+        }
+
+        String path = imageObjList.searchforPath(imageName).substring(6);
+
+        executorService.submit(() -> {
+            try {
+                File imageFile = new File(path);
+                String classificationResult = ImageClassifier.classify(imageFile);
+                imageObjList.setClassification(imageName, classificationResult);
+                Platform.runLater(() -> prob.setText(classificationResult));
+
+            } catch (Exception e) {
+                Platform.runLater(() -> prob.setText("Error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void shutdownExecutor() {
+        executorService.shutdown();
     }
 }
